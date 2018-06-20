@@ -9,7 +9,8 @@ from graph import *
 
 graph_data = Graph()
 graph_data.debug_create_test_data()
-print(graph_data.vertexes)
+print("\ngraph_data.vertexes: \n", graph_data.vertexes, "\n")
+print("\ngraph_data.vertexes[0].edges: \n", graph_data.vertexes[0].edges, "\n")
 
 # Cannot just increase this to get more vertexes
 # Bokeh works if you decrease the number though - it will render what it can in
@@ -34,9 +35,17 @@ graph.node_renderer.data_source.add(node_indices, 'index')
 graph.node_renderer.data_source.add(color_list, 'color')
 graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
 
+# This is drawing the edges from start to end
 graph.edge_renderer.data_source.data = dict(
-    start=[0]*N,
-    end=node_indices)
+    # This is why all the edges start from the first vertex
+    # Creates a list of length N of 0's: [0,0,0]
+    start=node_indices,
+    # Draws to each of the nodes/indices/vertexes -> [0,1,2]
+    end=[1,2,2]) # TODO: Grab these numbers directly from vertexes
+
+print("start", [0]*N)
+print("end", node_indices)
+print(graph_data.vertexes)
 
 ### start of layout code
 # Looks like this is setting the positions of the vertexes
