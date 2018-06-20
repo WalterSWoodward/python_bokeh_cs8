@@ -9,6 +9,7 @@ from graph import *
 
 graph_data = Graph()
 graph_data.debug_create_test_data()
+print(graph_data.vertexes)
 
 # Cannot just increase this to get more vertexes
 # Bokeh works if you decrease the number though - it will render what it can in
