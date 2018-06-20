@@ -14,15 +14,12 @@ print(graph_data.vertexes)
 # Cannot just increase this to get more vertexes
 # Bokeh works if you decrease the number though - it will render what it can in
 # the case of incomplete data.
-N = 11
+N = len(graph_data.vertexes) # makes N dynamic
 node_indices = list(range(N))
 
-# QUESTION: What is this??? - REVIEW
-# You cannot mutate Spectral8 directly, so you have to have two lines here.
-debug_pallete = Spectral8
-debug_pallete.append('#00ff00') # Just adds this color to the list of Spectral8 colors
-debug_pallete.append('#0000ff')
-debug_pallete.append('#ff0000')
+color_list = []
+for vertex in graph_data.vertexes:
+    color_list.append(vertex.color)
 
 # debug_pallete += [a, b, c] # Can use this format as well to combine into one line
 
@@ -34,7 +31,7 @@ graph = GraphRenderer()
 # Adds node indices (N of them)
 graph.node_renderer.data_source.add(node_indices, 'index')
 # Spectral8 is a list of colors
-graph.node_renderer.data_source.add(debug_pallete, 'color')
+graph.node_renderer.data_source.add(color_list, 'color')
 graph.node_renderer.glyph = Oval(height=250, width=250, fill_color='color')
 
 graph.edge_renderer.data_source.data = dict(
