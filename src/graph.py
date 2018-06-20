@@ -17,6 +17,6 @@ class Graph:
     
     def debug_create_test_data(self):
         debug_vertex_1 = Vertex('t1', x=40, y=40)
-        print(debug_vertex_1.pos['x'])
+        print("HI I AM FROM GRAPH.PY!", debug_vertex_1.pos['x'])
 
 # # PICKUP FROM 20-30min left

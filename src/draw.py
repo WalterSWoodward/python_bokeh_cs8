@@ -5,6 +5,11 @@ from bokeh.plotting import figure
 from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval
 from bokeh.palettes import Spectral8
 
+from graph import *
+
+graph_data = Graph()
+graph_data.debug_create_test_data()
+
 # Cannot just increase this to get more vertexes
 # Bokeh works if you decrease the number though - it will render what it can in
 # the case of incomplete data.
