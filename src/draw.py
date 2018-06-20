@@ -8,17 +8,19 @@ from bokeh.palettes import Spectral8
 # Cannot just increase this to get more vertexes
 # Bokeh works if you decrease the number though - it will render what it can in
 # the case of incomplete data.
-N = 9
+N = 11
 node_indices = list(range(N))
 
 # QUESTION: What is this??? - REVIEW
 # You cannot mutate Spectral8 directly, so you have to have two lines here.
 debug_pallete = Spectral8
-debug_pallete.append('#ff0000') # Just adds this color to the list of Spectral8 colors
-# debug_pallete.append('#ff0000')
+debug_pallete.append('#00ff00') # Just adds this color to the list of Spectral8 colors
+debug_pallete.append('#0000ff')
+debug_pallete.append('#ff0000')
+
 # debug_pallete += [a, b, c] # Can use this format as well to combine into one line
 
-plot = figure(title='Graph Layout Demonstration', x_range=(-1.1,1.1), y_range=(-1.1,1.1),
+plot = figure(title='Graph Layout Demonstration', x_range=(0, 500), y_range=(0,500),
               tools='', toolbar_location=None)
 
 graph = GraphRenderer()
@@ -27,7 +29,7 @@ graph = GraphRenderer()
 graph.node_renderer.data_source.add(node_indices, 'index')
 # Spectral8 is a list of colors
 graph.node_renderer.data_source.add(debug_pallete, 'color')
-graph.node_renderer.glyph = Oval(height=0.1, width=0.2, fill_color='color')
+graph.node_renderer.glyph = Oval(height=250, width=250, fill_color='color')
 
 graph.edge_renderer.data_source.data = dict(
     start=[0]*N,

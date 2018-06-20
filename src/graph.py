@@ -15,8 +15,8 @@ class Graph:
     def __init__(self):
         self.vertexes = []
     
-    # def debug_create_test_data(self):
-    #     debug_vertex_1 = Vertex('t1', x=40, y=40)
-    #     print(debug_vertex_1.pos['x'])
+    def debug_create_test_data(self):
+        debug_vertex_1 = Vertex('t1', x=40, y=40)
+        print(debug_vertex_1.pos['x'])
 
 # # PICKUP FROM 20-30min left
