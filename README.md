@@ -11,3 +11,5 @@
 # # e.g. `pipenv install bokeh`
 
 # run the file `python src/draw.py`
+
+# found code necessary to implement labels here: https://bokeh.pydata.org/en/latest/docs/user_guide/annotations.html

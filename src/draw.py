@@ -5,6 +5,10 @@ from bokeh.plotting import figure
 from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval
 from bokeh.palettes import Spectral8
 
+# Added for labels
+from bokeh.plotting import show, output_file
+from bokeh.models import ColumnDataSource, Range1d, LabelSet, Label
+
 from graph import *
 
 graph_data = Graph()
@@ -61,10 +65,37 @@ graph.edge_renderer.data_source.data = dict(
 x = [v.pos['x'] for v in graph_data.vertexes]
 y = [v.pos['y'] for v in graph_data.vertexes]
 
+
 graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)
 
 plot.renderers.append(graph)
+
+# Create a new dictionary to use as a data source, with three lists in it,
+# ordered in the same way as vertexes.
+# List of x values
+# List of y values
+# List of labels
+
+#TODO: Possible optimization: We run through this loop three times
+value = [v.value for v in graph_data.vertexes]
+
+label_source = ColumnDataSource(data=dict(x=x,
+                                          y=y,
+                                          v = value))
+
+# Information for rendering labels correctly
+# source = ColumnDataSource(data=dict(height=[196, 71, 72, 68, 58, 62],
+#                                     weight=[165, 189, 220, 141, 260, 174],
+#                                     names=['Mark', 'Amir', 'Matt', 'Greg',
+#                                            'Owen', 'Juan']))
+
+labels = LabelSet(x='x', y='y', text='v', level='glyph',
+              x_offset=5, y_offset=5, source=label_source, render_mode='canvas')
+
+
+#TODO: Investiagete plot.add_layout vs. plot.renderers.append
+plot.add_layout(labels)
 
 output_file('graph.html')
 show(plot)
