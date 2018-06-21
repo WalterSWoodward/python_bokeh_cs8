@@ -2,7 +2,7 @@ import math
 
 from bokeh.io import show, output_file
 from bokeh.plotting import figure
-from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval
+from bokeh.models import GraphRenderer, StaticLayoutProvider, Circle, Triangle, Diamond
 from bokeh.palettes import Spectral8
 
 # Added for labels
@@ -11,8 +11,14 @@ from bokeh.models import ColumnDataSource, Range1d, LabelSet, Label
 
 from graph import *
 
+WIDTH = 640
+HEIGHT = 480 #TODO: Currently graph renders square, scaled to numbers here. Possible fix: https://stackoverflow.com/questions/21980662/how-to-change-size-of-bokeh-figure
+CIRCLE_SIZE = 30
+DIAMOND_SIZE = 40
+
 graph_data = Graph()
 graph_data.debug_create_test_data()
+graph_data.bfs(graph_data.vertexes[0])
 # print("\ngraph_data.vertexes: \n", graph_data.vertexes, "\n")
 # print("\ngraph_data.vertexes[0].edges: \n", graph_data.vertexes[0].edges, "\n")
 
@@ -27,9 +33,9 @@ for vertex in graph_data.vertexes:
     color_list.append(vertex.color)
 
 # debug_pallete += [a, b, c] # Can use this format as well to combine into one line
-
-plot = figure(title='Graph Layout Demonstration', x_range=(0, 500), y_range=(0,500),
-              tools='', toolbar_location=None)
+# `figure` options: https://bokeh.pydata.org/en/latest/docs/reference/plotting.html
+plot = figure(title='Graph Layout Demonstration', x_range=(0, WIDTH), y_range=(0,HEIGHT),
+              tools='pan,wheel_zoom,box_zoom,save,reset,help', toolbar_location=None, plot_width=WIDTH, plot_height=HEIGHT)
 
 graph = GraphRenderer()
 
@@ -37,7 +43,13 @@ graph = GraphRenderer()
 graph.node_renderer.data_source.add(node_indices, 'index')
 # Spectral8 is a list of colors
 graph.node_renderer.data_source.add(color_list, 'color')
-graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
+# Circle, Oval or whatever you use needs to be imported at top
+# Looking up the docs for `Oval bokeh pydata` first, then navigating
+# to Circle is probably the most intuitive route to finding this:
+# 
+# graph.node_renderer.glyph = Circle(size=CIRCLE_SIZE, line_color="#3288bd", fill_color="white", line_width=3)
+# graph.node_renderer.glyph = Triangle(size=SHAPE_SIZE, line_color="#99d594", line_width=2, fill_color="lavender")
+graph.node_renderer.glyph = Diamond(size=DIAMOND_SIZE, line_color="#1c9099", line_width=2, fill_color='color')
 
 # This is drawing the edges from start to end
 
@@ -83,15 +95,13 @@ value = [v.value for v in graph_data.vertexes]
 label_source = ColumnDataSource(data=dict(x=x,
                                           y=y,
                                           v = value))
-
-# Information for rendering labels correctly
-# source = ColumnDataSource(data=dict(height=[196, 71, 72, 68, 58, 62],
-#                                     weight=[165, 189, 220, 141, 260, 174],
-#                                     names=['Mark', 'Amir', 'Matt', 'Greg',
-#                                            'Owen', 'Juan']))
-
-labels = LabelSet(x='x', y='y', text='v', level='glyph',
-              x_offset=5, y_offset=5, source=label_source, render_mode='canvas')
+# For aligning labels, google searched `LabelSet bokeh`, scanned
+# through the various keyword options, and found text_align and text_baseline
+# `level = 'glyph'` is an inherited property. Googling `bokeh (+code)` got me
+# this: http://bokeh.pydata.org/en/0.11.1/docs/reference/models/renderers.html
+# options are: ‘image’, ‘underlay’, ‘glyph’, ‘annotation’, ‘overlay’, ‘tool’
+labels = LabelSet(x='x', y='y', text='v', level='overlay',
+              x_offset=None, y_offset=None, source=label_source, render_mode='canvas', text_align='center', text_baseline='middle')
 
 
 #TODO: Investiagete plot.add_layout vs. plot.renderers.append
