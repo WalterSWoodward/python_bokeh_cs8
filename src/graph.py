@@ -21,8 +21,8 @@ class Graph:
         debug_vertex_3 = Vertex('t3', x=300, y=400)
         # debug_vertex_4 = Vertex('t4', x=140, y=140)
         # debug_vertex_5 = Vertex('t5', x=140, y=140)
-        print("HI I AM FROM GRAPH.PY!", debug_vertex_1.pos['x'])
-        print("Graph()", Graph())
+        # print("HI I AM FROM GRAPH.PY!", debug_vertex_1.pos['x'])
+        # print("Graph()", Graph())
         # creates edge 1 with destination vertex 2
         debug_edge_1 = Edge(debug_vertex_2)
         # adds edge 1 to vertex 1, making vertex 1 the origin/owner of this edge
@@ -30,7 +30,7 @@ class Graph:
  
         # creates new edge 2 with destination vertex 2
         debug_edge_2 = Edge(debug_vertex_2)
-        debug_vertex_3.edges.append(debug_vertex_2)
+        debug_vertex_3.edges.append(debug_edge_2)
 
         self.vertexes.extend([debug_vertex_1, debug_vertex_2, debug_vertex_3])
 
