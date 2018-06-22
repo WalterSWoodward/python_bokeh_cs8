@@ -18,7 +18,7 @@ DIAMOND_SIZE = 40
 
 graph_data = Graph()
 graph_data.debug_create_test_data()
-graph_data.bfs(graph_data.vertexes[0])
+graph_data.get_connected_components()
 # print("\ngraph_data.vertexes: \n", graph_data.vertexes, "\n")
 # print("\ngraph_data.vertexes[0].edges: \n", graph_data.vertexes[0].edges, "\n")
 
