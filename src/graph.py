@@ -19,25 +19,57 @@ class Graph:
         self.vertexes = []
     
     def debug_create_test_data(self):
-        debug_vertex_1 = Vertex('t1', x=100, y=100)
-        debug_vertex_2 = Vertex('t2', x=150, y=200)
-        debug_vertex_3 = Vertex('t3', x=150, y=50)
-        debug_vertex_4 = Vertex('t4', x=100, y=200)
-        debug_vertex_5 = Vertex('t5', x=350, y=450)
+        
+        # ============== HARDCODED VERTS ============== #
+
+        debug_vertex_1 = Vertex('t1', x=400, y=100)
+        debug_vertex_2 = Vertex('t2', x=300, y=200)
+        debug_vertex_3 = Vertex('t3', x=500, y=100)
+        debug_vertex_4 = Vertex('t4', x=600, y=200)
+        debug_vertex_5 = Vertex('t5', x=400, y=450)
         debug_vertex_6 = Vertex('t6', x=50, y=100)
+        debug_vertex_7 = Vertex('t7', x=50, y=300)
+        debug_vertex_8 = Vertex('t8', x=100, y=450)
+        debug_vertex_9 = Vertex('t9', x=100, y=250)
+        debug_vertex_10 = Vertex('t10', x=300, y=400)
+        debug_vertex_11= Vertex('t11', x=300, y=150)
+        debug_vertex_12 = Vertex('t12', x=50, y=400)
 
  
+        # ============== HARDCODED EDGES ============== #
+
         debug_edge_1 = Edge(debug_vertex_2)
         debug_vertex_1.edges.append(debug_edge_1)
-        debug_vertex_2.edges.append(Edge(debug_vertex_1))
-        
- 
+     
         # creates new edge 2 with destination vertex 2
-        debug_edge_2 = Edge(debug_vertex_2)
-        debug_vertex_3.edges.append(debug_edge_2)
-        debug_vertex_3.edges.append(Edge(debug_vertex_3))
+        debug_edge_2 = Edge(debug_vertex_3)
+        debug_vertex_2.edges.append(debug_edge_2)
+     
+        debug_edge_3 = Edge(debug_vertex_4)
+        debug_vertex_3.edges.append(debug_edge_3)
+ 
+        debug_edge_4 = Edge(debug_vertex_5)
+        debug_vertex_4.edges.append(debug_edge_4)
+     
+        debug_edge_5 = Edge(debug_vertex_6)
+        debug_vertex_5.edges.append(debug_edge_5)
+        
+        debug_edge_6 = Edge(debug_vertex_7)
+        debug_vertex_6.edges.append(debug_edge_6)
 
-        self.vertexes.extend([debug_vertex_1, debug_vertex_2, debug_vertex_3, debug_vertex_4, debug_vertex_5, debug_vertex_6])
+
+        self.vertexes.extend([debug_vertex_1,
+                              debug_vertex_2, 
+                              debug_vertex_3, 
+                              debug_vertex_4, 
+                              debug_vertex_5, 
+                              debug_vertex_6, 
+                              debug_vertex_7, 
+                              debug_vertex_8, 
+                              debug_vertex_9, 
+                              debug_vertex_10, 
+                              debug_vertex_11, 
+                              debug_vertex_12])
 
     def bfs(self, start):
         random_color = "#"+''.join([random.choice('0123456789ABCDEF') for j in range(6)])
@@ -62,6 +94,7 @@ class Graph:
         return found
 
     def get_connected_components(self):
+        print("Entering get_connect_components")
         searched = []
         for vertex in self.vertexes:
             if vertex.color == 'white':
